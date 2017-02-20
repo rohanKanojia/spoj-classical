@@ -61,6 +61,18 @@ public:
       return mergeNodes(query(l, start, mid, qx, mid), query(r, mid+1, end, mid+1, qy));
     }
   }
+  void update(long long x, long long val) {
+    long long curNode = parents[x];
+
+    tree[curNode].prefixSum = tree[curNode].suffixSum = tree[curNode].sum = tree[curNode].maxSum = val;
+
+    curNode = (curNode-1)/2;
+    while(curNode > 0) {
+      tree[curNode] = mergeNodes(tree[2*curNode+1], tree[2*curNode+2]);
+      curNode = (curNode-1)/2;
+    }
+    tree[0] = mergeNodes(tree[1], tree[2]);
+  }
 };
 
 int main() {
@@ -73,9 +85,12 @@ int main() {
 
   SegmentTree ss(arr);
   for(long long i = 0; i < Q; i++) {
-    long long a, b;
-    scanf("%lld%lld", &a, &b);
-    printf("%lld\n", ss.query(0, 0, N-1, a-1, b-1).maxSum);
+    long long op, a, b;
+    scanf("%lld%lld%lld", &op, &a, &b);
+    if(op == 1) 
+      printf("%lld\n", ss.query(0, 0, N-1, a-1, b-1).maxSum);
+    else 
+      ss.update(a-1, b);
   }
   return 0;
 }
