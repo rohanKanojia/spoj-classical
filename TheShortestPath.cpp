@@ -26,7 +26,6 @@ public:
   ~Graph() { delete[] adj; }
 };
 long long dijkstrasShortestPath(Graph& gg, long long start, long long end);
-long long minDistance(vector<long long>& dist, vector<bool>& sptSet);
 
 int main() {
   long long T;
