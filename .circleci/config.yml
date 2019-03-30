@@ -1,0 +1,16 @@
+version: 2
+
+jobs:
+  build:
+    machine: true
+    steps:
+    - checkout
+    - run:
+        command: |
+          make -n 
+    
+workflows:
+  version: 2
+  all:
+    jobs:
+    - build
